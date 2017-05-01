@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TurnSystem
 {
     public class TurnOrder : IEnumerable<ITurnBasedPawn>
     {
-        // TODO: Cycle complete event; fired when round is complete
-
         // Nodes stored in order of priority
         // Node order manupulatable by updating a node's priority
         // Node order must be iterable (to display upcomming turns on UI)
@@ -67,6 +64,7 @@ namespace TurnSystem
 
         public void Remove(ITurnBasedPawn pawn)
         {
+            // Can't insert null pawn
             if (pawn == null)
                 throw new ArgumentNullException("Pawn cannot be null");
 
@@ -93,6 +91,7 @@ namespace TurnSystem
         // Returns true if there are pawns who have not had their turn during this cycle
         public bool MoveNext()
         {
+            // Can't move to next pawn in order if there is none
             if (pawns.Count == 0)
                 throw new InvalidOperationException("Order is empty");
 
@@ -140,7 +139,10 @@ namespace TurnSystem
         {
             if (Current != null)
             {
+                // Activate current pawn...
                 Current.TurnStart();
+
+                // ...THEN tell controller pawn is active
                 Current.Controller.PawnStart(Current);
             }
         }
