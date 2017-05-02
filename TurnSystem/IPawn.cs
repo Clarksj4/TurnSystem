@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace TurnSystem
+namespace TurnBased
 {
     /// <summary>
     /// Interface for object that operates in a turn based manner
     /// </summary>
-    public interface ITurnBasedPawn : IComparable<ITurnBasedPawn>
+    public interface IPawn : IComparable<IPawn>
     {
         /// <summary>
         /// The object that controls this pawn
         /// </summary>
-        ITurnBasedController Controller { get; }
+        IPawnController Controller { get; }
 
         /// <summary>
         /// The pawn's turn is starting
