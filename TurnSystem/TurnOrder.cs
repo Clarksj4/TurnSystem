@@ -204,7 +204,8 @@ namespace TurnSystem
                 Current.TurnStart();
 
                 // ...THEN tell controller pawn is active
-                Current.Controller.PawnStart(Current);
+                if (Current.Controller != null)
+                    Current.Controller.PawnStart(Current);
             }
         }
 
