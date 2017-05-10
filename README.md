@@ -71,7 +71,9 @@ Objects that implement the IPawn interface can be added to a turn order.
         order.Insert(examplePawn2);
     }
     
-Subsequent calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _TurnEnd_ method is called, and the next pawn's _TurnStart_ method is called. After a cycle completes, a further call to _MoveNext_ will restart the cycle. This allows for action at the end of a complete cycle.
+### Cycling the turn order    
+
+Calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _TurnEnd_ method is called, and the next pawn's _TurnStart_ method is called. After a cycle completes, a further call to _MoveNext_ will restart the cycle. This allows for action at the end of a complete cycle.
     
     TurnOrder<int> order;
     
