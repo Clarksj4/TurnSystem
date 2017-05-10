@@ -25,6 +25,15 @@ Each object in the turn order must implement the IPawn interface. This allows th
     public class TurnBasedPawnExample : ITurnBasedPawn
     {
         ...
+        public int Priority
+        {
+            get 
+            {
+                // Get or calculate pawn priority in turn order...
+                int pawnPriority = ...
+                return pawnPriority;
+            }
+        }        
         
         // This pawn's turn is beginning
         public void TurnStart()
