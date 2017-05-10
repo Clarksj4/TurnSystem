@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPawnController.cs" />
     <Compile Include="IPawn.cs" />
     <Compile Include="TurnOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
