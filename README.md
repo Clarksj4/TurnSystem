@@ -67,7 +67,33 @@ Objects that implement the IPawn interface can be added to a turn order.
         TurnOrder<int> order = new TurnOrder<int>();
     
         // Add the example pawns to the order
-        order.Insert(examplePawn);
-        order.Insert(examplePawn);
+        order.Insert(examplePawn1);
+        order.Insert(examplePawn2);
+    }
+    
+Subsequent calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _TurnEnd_ method is called, and the next pawn's _TurnStart_ method is called. After a cycle completes, a further call to _MoveNext_ will restart the cycle. This allows for action at the end of a complete cycle.
+    
+    TurnOrder<int> order;
+    
+    public void MoveNextExample()
+    {
+        while (!gameOver)
+        {
+            // Returns true if there is another pawn in the order who is yet to have a turn
+            bool pawnsRemaining = order.MoveNext();
+            while (pawnsRemaining)
+            {
+                // ... Do something ...
+                // ... Update turn order interface, etc ...
+            
+                // Proceed to next pawn in order
+                order.MoveNext();
+            }
+        
+            // Complete cycle of turn order complete!
+        
+            // ... Do something ...
+            // ... Discard cards, resolve effects, replenish health, etc ...
+        }
     }
     
