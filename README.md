@@ -22,7 +22,7 @@ Each object in the turn order must implement the IPawn interface. This allows th
 
     using TurnBased;
     
-    public class TurnBasedPawnExample : ITurnBasedPawn
+    public class TurnBasedPawnExample : ITurnBasedPawn<int>
     {
         ...
         public int Priority
@@ -64,7 +64,7 @@ Objects that implement the IPawn interface can be added to a turn order.
     public void TurnOrderExample()
     {
         // An empty order
-        TurnOrder order = new TurnOrder();
+        TurnOrder<int> order = new TurnOrder<int>();
     
         // Add the example pawns to the order
         order.Insert(examplePawn);
