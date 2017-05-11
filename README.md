@@ -208,7 +208,7 @@ The following is an example of multiple turn orders being used to simulate a tea
             bool unitsRemaining = unitOrder.MoveNext();
             while (unitsRemaining)
             {
-                // Proceed to next pawn in order
+                // Proceed to next unit in order
                 unitsRemaining = order.MoveNext();
             }
         }
