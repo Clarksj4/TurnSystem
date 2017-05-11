@@ -26,6 +26,11 @@ namespace TurnBased
             }
         }
 
+        /// <summary>
+        /// The number of pawns in this turn order.
+        /// </summary>
+        public int Count { get; private set; }
+
         private LinkedList<IPawn<T>> pawns;
         private LinkedListNode<IPawn<T>> currentNode;
         private bool currentToBeRemoved;
@@ -74,6 +79,8 @@ namespace TurnBased
                 else
                     pawns.AddBefore(walker, pawn);
             }
+
+            Count++;
         }
 
         /// <summary>
@@ -98,6 +105,7 @@ namespace TurnBased
                 pawns.Remove(node);
 
             // Pawn successfully removed
+            Count--;
             return true;
         }
 
