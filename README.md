@@ -89,7 +89,7 @@ Calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _Tu
                 // ... Update turn order interface, etc ...
             
                 // Proceed to next pawn in order
-                order.MoveNext();
+                pawnsRemaining = order.MoveNext();
             }
         
             // Complete cycle of turn order complete!
@@ -153,6 +153,7 @@ Should a pawn's priority change, calling _UpdatePriority_ will reposition the gi
 
     TurnOrder<int> order;
     TurnBasedPawnExample examplePawn1;
+    TurnBasedPawnExample examplePawn2;
     
     public void UpdatePriorityExample()
     {
@@ -163,13 +164,55 @@ Should a pawn's priority change, calling _UpdatePriority_ will reposition the gi
         examplePawn1.Priority = 12;
         exameplPawn2.Priority = 32;
     
-        // Add the example pawns to the order
+        // Add the example pawns to the order. Pawn2 is first in order
         order.Insert(examplePawn1);
         order.Insert(examplePawn2);
     
         // Change pawn's priority. Order needs to update position of pawns 
         examplePawn1.Priority = 42;
         
-        // Pawn positioned correctly in order
+        // Pawn positioned correctly in order. Pawn1 is first in order
         order.UpdatePriority(examplePawn1);
     }
+
+### Multiple turn orders
+
+The following is an example of multiple turn orders being used to simulate a team and unit scenario. The game consists of multiple teams which take turns to act. During a teams turn their units act in a specific order.
+
+    TurnOrder<int> teamOrder;
+    
+    public void TeamOrderExample()
+    {
+        while (!gameOver)
+        {
+            // Loop through all teams
+            bool teamsRemaining = teamOrder.MoveNext();
+            while (teamsRemaining)
+            {
+                // Proceed to next team in order
+                teamsRemaining = order.MoveNext();
+            }
+        }
+    }
+    
+    
+    public class Team : IPawn
+    {
+        TurnOrder<int> unitOrder;
+    
+        ...
+    
+        public void TurnStart()
+        {
+            // Loop through all units on team
+            bool unitsRemaining = unitOrder.MoveNext();
+            while (unitsRemaining)
+            {
+                // Proceed to next pawn in order
+                unitsRemaining = order.MoveNext();
+            }
+        }
+    
+        ...
+    }
+    
