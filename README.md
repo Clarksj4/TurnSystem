@@ -79,7 +79,8 @@ Calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _Tu
     
     public void MoveNextExample()
     {
-        while (!gameOver)
+        // Game over when order no longer contains any pawns
+        while (order.Count > 0)
         {
             // Returns true if there is another pawn in the order who is yet to have a turn
             bool pawnsRemaining = order.MoveNext();
