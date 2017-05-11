@@ -43,6 +43,7 @@ namespace TurnBased
             pawns = new LinkedList<IPawn<T>>();
             currentNode = null;
             currentToBeRemoved = false;
+            Count = 0;
         }
 
         /// <summary>
