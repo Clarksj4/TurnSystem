@@ -4,7 +4,7 @@ This page is a WIP
 
 ## Overview
 
-A turn order allows for insertion of pawns whilst maintaining their order and tracking which pawn's turn it currently is.
+A turn order is a priority ordered collection of items that allows enumeration. A turn order notifies members when they are iterated via the _MoveNext_ method.
 
 Opertation     | Description                                                  |
 ---------------|--------------------------------------------------------------|
@@ -18,24 +18,24 @@ MoveNext       | Progress current to the next pawn in the order               |
 
 ### IPawn
 
-Each object in the turn order must implement the IPawn interface. This allows the object to be notified of its turn beginning and ending.
+Each object in the turn order must implement the _ITurnBased_ interface. This allows the object to be notified of its turn beginning and ending.
 
     using TurnBased;
     
-    public class TurnBasedPawnExample : ITurnBasedPawn<int>
+    public class TurnBasedExample : ITurnBased<int>
     {
         ...
         public int Priority
         {
             get 
             {
-                // Get or calculate pawn priority in turn order...
-                int pawnPriority = ...
-                return pawnPriority;
+                // Get or calculate priority in turn order...
+                int priority = ...
+                return priority;
             }
         }        
         
-        // This pawn's turn is beginning
+        // This object's turn is beginning
         public void TurnStart()
         {
             // ... Do something ...
@@ -44,7 +44,7 @@ Each object in the turn order must implement the IPawn interface. This allows th
             ...
         }
         
-        // This pawn's turn is ending
+        // This object's turn is ending
         public void TurnEnd()
         {
             // ... Do something ...
@@ -56,10 +56,10 @@ Each object in the turn order must implement the IPawn interface. This allows th
     
 ### Creating a turn order
 
-Objects that implement the IPawn interface can be added to a turn order.
+Objects that implement the _ITurnBased_ interface can be added to a turn order.
 
-    TurnBasedPawnExample examplePawn1;
-    TurnBasedPawnExample examplePawn2;
+    TurnBasedExample examplePawn1;
+    TurnBasedExample examplePawn2;
 
     public void TurnOrderExample()
     {
@@ -73,24 +73,24 @@ Objects that implement the IPawn interface can be added to a turn order.
     
 ### Cycling the turn order    
 
-Calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _TurnEnd_ method is called, and the next pawn's _TurnStart_ method is called. After a cycle completes, a further call to _MoveNext_ will restart the cycle. This allows for action at the end of a complete cycle.
+Calls to _MoveNext_ cycle through the items in order. The current item's _TurnEnd_ method is called, and the next item's _TurnStart_ method is called. After a cycle completes, a further call to _MoveNext_ will restart the cycle. This allows for action at the end of a complete cycle.
     
     TurnOrder<int> order;
     
     public void MoveNextExample()
     {
-        // Game over when order no longer contains any pawns
+        // Game over when order no longer contains any items
         while (order.Count > 0)
         {
-            // Returns true if there is another pawn in the order who is yet to have a turn
-            bool pawnsRemaining = order.MoveNext();
-            while (pawnsRemaining)
+            // Returns true if there is another item in the order who is yet to have a turn
+            bool remaining = order.MoveNext();
+            while (remaining)
             {
                 // ... Do something ...
                 // ... Update turn order interface, etc ...
             
-                // Proceed to next pawn in order
-                pawnsRemaining = order.MoveNext();
+                // Proceed to next item in order
+                remaining = order.MoveNext();
             }
         
             // Complete cycle of turn order complete!
@@ -102,10 +102,10 @@ Calls to _MoveNext_ cycle through the pawns in the order. The current pawn's _Tu
     
 ### Checking whose turn it is
 
-The _Current_ property provides a reference to the pawn whose turn it currently is. This is useful should other objects need to know if it is a particular pawns turn.
+The _Current_ property provides a reference to the item whose turn it currently is. This is useful should other objects need to know if it is a particular items turn.
 
     TurnOrder<int> order;
-    TurnBasedPawnExample examplePawn1;
+    TurnBasedExample examplePawn1;
     
     public void CurrentExample()
     {
@@ -118,14 +118,14 @@ The _Current_ property provides a reference to the pawn whose turn it currently 
         }
     }
     
-### Removing pawns from the order
+### Removing items from the order
 
-Pawns can be removed from the order at any time. If the currently acting pawn is removed, the _Current_ property will return null until _MoveNext_ is called to proceed to the next pawn in the order. _Remove_ will return true if the pawn was present in the order and has been removed.
+Items can be removed from the order at any time. If the currently acting pawn is removed, the _Current_ property will return null until _MoveNext_ is called to proceed to the next item in the order. _Remove_ will return true if the item was present in the order and has been removed.
 
     TurnOrder<int> order;
-    TurnBasedPawnExample examplePawn1;
+    TurnBasedExample examplePawn1;
     
-    public void RemovePawnExample()
+    public void RemoveExample()
     {
         // Check if it is examplePawn1's turn
         bool isTurn = order.Current == examplePawn1;
@@ -150,18 +150,18 @@ Pawns can be removed from the order at any time. If the currently acting pawn is
     
 ### Priority changes
 
-Should a pawn's priority change, calling _UpdatePriority_ will reposition the given pawn into the correct place in the turn order.
+Should an item's priority change, calling _UpdatePriority_ will reposition the given item into the correct place in the turn order.
 
     TurnOrder<int> order;
-    TurnBasedPawnExample examplePawn1;
-    TurnBasedPawnExample examplePawn2;
+    TurnBasedExample examplePawn1;
+    TurnBasedExample examplePawn2;
     
     public void UpdatePriorityExample()
     {
         // An empty order
         TurnOrder<int> order = new TurnOrder<int>();
     
-        // Set priority of pawns
+        // Set priority of items
         examplePawn1.Priority = 12;
         exameplPawn2.Priority = 32;
     
@@ -169,16 +169,16 @@ Should a pawn's priority change, calling _UpdatePriority_ will reposition the gi
         order.Insert(examplePawn1);
         order.Insert(examplePawn2);
     
-        // Change pawn's priority. Order needs to update position of pawns 
+        // Change item's priority. Order needs to update position of pawns 
         examplePawn1.Priority = 42;
         
-        // Pawn positioned correctly in order. Pawn1 is first in order
+        // Item positioned correctly in order. Pawn1 is first in order
         order.UpdatePriority(examplePawn1);
     }
 
 ### Multiple turn orders
 
-The following is an example of multiple turn orders being used to simulate a team and unit scenario. The game consists of multiple teams which take turns to act. During a teams turn their units act in a specific order.
+The following is an example of multiple turn orders being used to simulate a Team-Unit scenario. The game consists of multiple Teams which take turns to act. During a Teams turn their Units act in a specific order.
 
     TurnOrder<int> teamOrder;
     
@@ -197,7 +197,7 @@ The following is an example of multiple turn orders being used to simulate a tea
     }
     
     
-    public class Team : IPawn
+    public class Team : ITurnBased
     {
         TurnOrder<int> unitOrder;
     
