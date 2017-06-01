@@ -8,11 +8,11 @@ A turn order is a priority ordered collection of items that allows enumeration. 
 
 Opertation     | Description                                                  |
 ---------------|--------------------------------------------------------------|
-Current        | Get the pawn whose turn it is                                |
-Insert         | Inserts a pawn in priority order                             |
-Remove         | Removes a pawn from the order                                |
-UpdatePriority | Updates a pawn's position in order based on its new priority |
-MoveNext       | Progress current to the next pawn in the order               |
+Current        | Get the item whose turn it is                                |
+Insert         | Inserts an item in priority order                             |
+Remove         | Removes an item from the order                                |
+UpdatePriority | Updates an item's position in order based on its new priority |
+MoveNext       | Progress current to the next item in the order               |
 
 ## Usage
 
