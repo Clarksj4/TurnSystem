@@ -6,13 +6,13 @@ This page is a WIP
 
 A turn order is a priority ordered collection of items that allows enumeration. A turn order notifies members when they are iterated via the _MoveNext_ method.
 
-Opertation     | Description                                                  |
----------------|--------------------------------------------------------------|
-Current        | Get the item whose turn it is                                |
-Insert         | Inserts an item in priority order                             |
-Remove         | Removes an item from the order                                |
-UpdatePriority | Updates an item's position in order based on its new priority |
-MoveNext       | Progress current to the next item in the order               |
+Opertation     | Description                                                         |
+---------------|---------------------------------------------------------------------|
+Current        | Get the object whose turn it is                                     |
+Insert         | Inserts an object in priority order                                 |
+Remove         | Removes an object from the order                                    |
+UpdatePriority | Updates an object's position in the order based on its new priority |
+MoveNext       | Progress current to the next object in the order                    |
 
 ## Usage
 
