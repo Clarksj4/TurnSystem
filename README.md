@@ -1,7 +1,5 @@
 # Turn System
 
-This page is a WIP
-
 ## Overview
 
 A turn order is a priority ordered collection of items that allows enumeration. A turn order notifies members when they are iterated via the _MoveNext_ method.
