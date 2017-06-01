@@ -120,7 +120,7 @@ The _Current_ property provides a reference to the item whose turn it currently 
     
 ### Removing items from the order
 
-Items can be removed from the order at any time. If the currently acting pawn is removed, the _Current_ property will return null until _MoveNext_ is called to proceed to the next item in the order. _Remove_ will return true if the item was present in the order and has been removed.
+Items can be removed from the order at any time. If the currently acting item is removed, the _Current_ property will return null until _MoveNext_ is called to proceed to the next item in the order. _Remove_ will return true if the item was present in the order and has been removed.
 
     TurnOrder<int> order;
     TurnBasedExample examplePawn1;
@@ -139,10 +139,10 @@ Items can be removed from the order at any time. If the currently acting pawn is
             // ... Do something ...
             // ... Update interface, check for game over, etc
         
-            // Was it the removed pawn's turn?
+            // Was it the removed item's turn?
             if (isTurn)
             {
-                // Move on to next pawn in the order
+                // Move on to next item in the order
                 order.MoveNext();
             }
         }
