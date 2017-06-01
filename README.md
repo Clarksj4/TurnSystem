@@ -16,7 +16,7 @@ MoveNext       | Progress current to the next item in the order               |
 
 ## Usage
 
-### IPawn
+### ITurnBased
 
 Each object in the turn order must implement the _ITurnBased_ interface. This allows the object to be notified of its turn beginning and ending.
 
